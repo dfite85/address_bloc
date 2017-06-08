@@ -15,12 +15,13 @@ class MenuController
         puts "2 - Create an entry"
         puts "3 - Search for an entry"
         puts "4 - Import entires from a CSV"
-        puts "5 - Exit"
+        puts "5 - View Entry n"                                                 #selector for assingment 5 
+        puts "6 - Exit"
         print "Enter your selection: "
         
-        selection = gets.to_i
+        selection = gets.to_i                                                   #converts selection to intiger
         
-        case selection 
+        case selection                                                          #sets selection cast to specific when inputs 
         when 1
             system "clear"
             view_all_entries
@@ -37,17 +38,42 @@ class MenuController
             system "clear"
             read_csv
             main_menu
+            
         when 5
+            system "clear"                                                      #clears system
+            entry_n_submenu                                                     #opens entry_n_submenu
+            main_menu                                                           #returns to main menu
+        when 6
             puts "Good-bye"
             
             exit
             
-        else
+        else                                                                    #when an entry is invalid
             system "clear"
-            puts "Sorry, that is not a valid input"
-            main_menu
+            puts "Sorry, that is not a valid input"                             #naw dawg
+            main_menu                                                           #returns to main menu
         end
     end
+    
+    def entry_n_submenu                                                         #when entry_n_submenu is called from case/when statements above
+        print "Entry number to view: "                                          #prints this sting for user to see
+        selection = gets.chomp.to_i                                             #gets and chomps user selection and converts to intiger
+        
+        if selection < @address_book.entries.count                               #if selection is less than entry count
+            puts @address_book.entries[selection]                               #puts user selection
+            puts "Press enter to return to the main menu"                       #then gives user a way back to main menu
+            gets.chomp                                                          #get chomp uses enter
+            system "clear"                                                      #clears system
+        else
+            puts "#{selection} is not valid input"                              #invalid input
+            entry_n_submenu                                                     #gives user a second chance
+        end
+    end
+    
+#So the only issue I have with this code is that putting the selection in and array offsets the number that the selection can be therefore being confusing when calling the entry    
+    
+    
+    
 
 def view_all_entries
 end
@@ -60,6 +86,13 @@ end
 
 def read_csv
 end
+
+
+
+    
+
+
+
 
     def create_entry
     
@@ -91,6 +124,9 @@ end
     system "clear"                                            #clears the screen
     puts "End of entries"                                     
     end
+    
+ 
+    
     
     def entry_submenu(entry)                                  #method for a submenu in address book
         

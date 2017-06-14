@@ -1,4 +1,5 @@
 require_relative 'entry'
+require "csv"
 
 class AddressBook
     attr_reader :entries
@@ -33,6 +34,17 @@ class AddressBook
     end
     
     entries.insert(index, Entry.new(name, phone_number, email))
+    end
+    
+    def import_from_csv(file_name)
+        
+        csv_text = File.read(file_name)                                              #method starts by reading the file with file.read
+        csv = CSV.parse(csv_text, headers: true, skip_blanks: true)                  #use CSV class to parse the file, the result is this is an object of type csv::table
+                                                                                             
+        csv.each do |row|                                                            #iterate over the tables object rows 
+            row_hash = row.to_hash                                                   #creates a hash for each row
+            add_entry(row_hash["name"], row_hash["phone_number"], row_hash["email"]) #converts each row_hash to an entry using add_entry 
+        end
     end
 end
 

@@ -59,7 +59,7 @@ class MenuController
         print "Entry number to view: "                                          #prints this sting for user to see
         selection = gets.chomp.to_i                                             #gets and chomps user selection and converts to intiger
         
-        if selection < @address_book.entries.count                               #if selection is less than entry count
+        if selection < @address_book.entries.count                              #if selection is less than entry count
             puts @address_book.entries[selection]                               #puts user selection
             puts "Press enter to return to the main menu"                       #then gives user a way back to main menu
             gets.chomp                                                          #get chomp uses enter

@@ -152,6 +152,104 @@ RSpec.describe AddressBook do
     
     end
     
+    describe "#iterative_search" do                                             #test iterative search
+        it "searches AddressBook for a non-existent entry" do                   
+            book.import_from_csv("entries.csv")                                 #imports entries from csv
+            entry = book.iterative_search("Dan")                                #sets search equal to entry
+            expect(entry).to be_nil                                             #expects entry to be nil
+        end
+        
+        it"searches AddressBook for Bill" do                                    #Looking for Bill
+            book.import_from_csv("entries.csv")                                 #imports entries from csv file
+            entry = book.iterative_search("Bill")                               #sets search to var entry
+            expect(entry).to be_a Entry                                         #expects entry to be an object entry
+            check_entry(entry, "Bill", "555-555-4854", "bill@blocmail.com")     #checks it against control
+        end
+        
+        it "searches AddressBook for Bob" do                                    #repeated for all entries
+            book.import_from_csv("entries.csv")
+            entry = book.iterative_search("Bob")
+            expect(entry).to be_a Entry
+            check_entry(entry, "Bob", "555-555-5415", "bob@blocmail.com")
+        end
+        
+        it "searches AddressBook for Joe" do
+            book.import_from_csv("entries.csv")
+            entry = book.iterative_search("Joe")
+            expect(entry).to be_a Entry
+            check_entry(entry, "Joe", "555-555-3660", "joe@blocmail.com")
+        end
+        
+          it "searches AddressBook for Sally" do
+            book.import_from_csv("entries.csv")
+            entry = book.iterative_search("Sally")
+            expect(entry).to be_a Entry
+            check_entry(entry, "Sally", "555-555-4646", "sally@blocmail.com")
+        end
+        
+          it "searches AddressBook for Sussie" do
+            book.import_from_csv("entries.csv")
+            entry = book.iterative_search("Sussie")
+            expect(entry).to be_a Entry
+            check_entry(entry, "Sussie", "555-555-2036", "sussie@blocmail.com")
+        end
+        
+          it "searches AddressBook for Billy" do                                #a test thats looks for something that we know exists but isnt exactly the same
+            book.import_from_csv("entries.csv")
+            entry = book.iterative_search("Billy")
+            expect(entry).to be_nil
+        end
+    end
+    
+    describe "#binary_search" do                                                #test binary search
+        it "searches AddressBook for a non-existent entry" do                   
+            book.import_from_csv("entries.csv")                                 #imports entries from csv
+            entry = book.binary_search("Dan")                                   #sets search equal to entry
+            expect(entry).to be_nil                                             #expects entry to be nil
+        end
+        
+        it"searches AddressBook for Bill" do                                    #Looking for Bill
+            book.import_from_csv("entries.csv")                                 #imports entries from csv file
+            entry = book.binary_search("Bill")                                  #sets search to var entry
+            expect(entry).to be_a Entry                                         #expects entry to be an object entry
+            check_entry(entry, "Bill", "555-555-4854", "bill@blocmail.com")     #checks it against control
+        end
+        
+        it "searches AddressBook for Bob" do                                    #repeated for all entries
+            book.import_from_csv("entries.csv")
+            entry = book.binary_search("Bob")
+            expect(entry).to be_a Entry
+            check_entry(entry, "Bob", "555-555-5415", "bob@blocmail.com")
+        end
+        
+        it "searches AddressBook for Joe" do
+            book.import_from_csv("entries.csv")
+            entry = book.binary_search("Joe")
+            expect(entry).to be_a Entry
+            check_entry(entry, "Joe", "555-555-3660", "joe@blocmail.com")
+        end
+        
+          it "searches AddressBook for Sally" do
+            book.import_from_csv("entries.csv")
+            entry = book.binary_search("Sally")
+            expect(entry).to be_a Entry
+            check_entry(entry, "Sally", "555-555-4646", "sally@blocmail.com")
+        end
+        
+          it "searches AddressBook for Sussie" do
+            book.import_from_csv("entries.csv")
+            entry = book.binary_search("Sussie")
+            expect(entry).to be_a Entry
+            check_entry(entry, "Sussie", "555-555-2036", "sussie@blocmail.com")
+        end
+        
+          it "searches AddressBook for Billy" do                                #a test thats looks for something that we know exists but isnt exactly the same
+            book.import_from_csv("entries.csv")
+            entry = book.binary_search("Billy")
+            expect(entry).to be_nil
+        end
+        
+    end
 end
     
     

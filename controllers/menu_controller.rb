@@ -16,7 +16,8 @@ class MenuController
         puts "3 - Search for an entry"
         puts "4 - Import entires from a CSV"
         puts "5 - View Entry n"                                                 #selector for assingment 5 
-        puts "6 - Exit"
+        puts "6 - Delete all entries"
+        puts "7 - Exit"
         print "Enter your selection: "
         
         selection = gets.to_i                                                   #converts selection to intiger
@@ -44,6 +45,11 @@ class MenuController
             entry_n_submenu                                                     #opens entry_n_submenu
             main_menu                                                           #returns to main menu
         when 6
+            system "clear"
+            @address_book.demolish
+            puts "All ya shit gone now"
+            main_menu
+        when 7
             puts "Good-bye"
             
             exit
@@ -73,7 +79,6 @@ class MenuController
 #So the only issue I have with this code is that putting the selection in and array offsets the number that the selection can be therefore being confusing when calling the entry    
     
     #stub outs
-    
 
 
 

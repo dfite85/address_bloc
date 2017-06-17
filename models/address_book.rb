@@ -8,6 +8,10 @@ class AddressBook
         @entries = []
     end
     
+    def demolish
+        @entries = []
+    end
+    
     def remove_entry(name, phone_number, email)
        delete_entry = nil 
        
@@ -78,7 +82,7 @@ class AddressBook
         elsif name > mid_name                                                   #if name is alphabetically after mid_name we set lower to mid + 1 to search the top half of the array
             lower = mid + 1
         end                                                                     #loop iteration ends sucessfully returning name or
-    end
+        end
     return nil                                                                  #if still no match return nil
-end
+    end
 end

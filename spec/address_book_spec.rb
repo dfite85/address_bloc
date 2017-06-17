@@ -250,7 +250,15 @@ RSpec.describe AddressBook do
         end
         
     end
+    
+    describe "#demolish" do
+        it "deletes all entries" do
+            book.add_entry("Ada LoveLace", "010.012.1815", "augusta.king@lovelace.com")
+            book.add_entry("Ada LoveLace", "010.012.1815", "augusta.king@lovelace.com")
+            book.add_entry("Ada LoveLace", "010.012.1815", "augusta.king@lovelace.com")
+            
+            book.demolish
+            expect(book.entries.size).to eq 0
+        end
+    end
 end
-    
-    
-

@@ -72,27 +72,72 @@ class MenuController
     
 #So the only issue I have with this code is that putting the selection in and array offsets the number that the selection can be therefore being confusing when calling the entry    
     
-    
+    #stub outs
     
 
-def view_all_entries
-end
+
 
 def create_array
 end
 
-def search_entries
-end
+    def search_entries
+        print "Search by name: "
+        name = gets.chomp
+        
+        match = address_book.binary_search(name)
+        system "clear"
+        
+        if match
+            puts match.to_s
+            search_submenu(match)
+        else
+            puts "No match found for #{name}"
+        end
+    end
 
-def read_csv
-end
-
-
-
+    def delete_entry(entry)                                                     #method delete entry
+        address_book.entries.delete(entry)                                      #looks at address book for the entry then removes it
+        puts "#{entry.name} had been deleted"                                   #then prints out 
+    end
+    
+    def edit_entry(entry)                                                       #method to edit old entries
+        print "Updated name: "                                                  #asks user for a name
+        name = gets.chomp                                                       #gets name and sets it eql to var name
+        print "Updated phone number: "                                          
+        phone_number = gets.chomp
+        print "Updated email: "
+        email = gets.chomp
+        
+        entry.name = name if !name.empty?                                       #uses !attribute.empty? to check for a valid entry then stores it to entry.var
+        entry.phone_number = phone_number if !phone_number.empty?
+        entry.email = email if !email.empty?
+        system "clear"
+        
+        puts "Updated entry: "
+        puts entry                                                              #displays the modified entry
+    end
     
 
-
-
+    def read_csv
+    
+        print "Enter CSV file to import: "                                      #prompt for user
+        file_name = gets.chomp                                                  #stores user entry to file_name
+    
+        if file_name.empty?                                                     #if file name is empty 
+        system "clear"                                                          #clear sys
+        puts "No CSV file read"                                                 #show this message
+        main_menu                                                               #return to main menu
+        end
+    
+    begin
+        entry_count = address_book.import_from_csv(file_name).count             #imports a specified file and saves to var entry count
+        system "clear"
+        puts "#{entry_count} new entries added from #{file_name}"
+    rescue
+        puts"#{file_name} is not a valid CSV file, please enter the name of a valid CSV file"
+        read_csv
+    end
+    end 
 
     def create_entry
     
@@ -121,13 +166,11 @@ end
             entry_submenu(entry)                              #call submenu to display a submenu for each entry
         end                                                   #what do you want to do with the entry
                                                             
-    system "clear"                                            #clears the screen
-    puts "End of entries"                                     
+        system "clear"                                        #clears the screen
+        puts "End of entries"                                     
     end
     
  
-    
-    
     def entry_submenu(entry)                                  #method for a submenu in address book
         
         puts "n - next entry"                                 #commands for the entry submenu
@@ -141,7 +184,10 @@ end
         
         when "n"                                              #when one of these is selected it prints a puts from above selection
         when "d"
+            delete_entry(entry)
         when "e"
+            edit_entry(entry)
+            edit_submenu(entry)
         when "m"
             system "clear"                                    #clears the screen
             main_menu                                         #returns main menu
@@ -151,5 +197,35 @@ end
             entry_submenu(entry)                              #returns the submenu so you can try again
         end
     end
+    
+    def search_submenu(entry)
+        puts "\nd - delete entry"
+        puts "e - edit this entry"
+        puts " m - return to main menu"
+        
+        selection = gets.chomp
+        
+        case selection 
+        when "d"
+            system "clear"
+            delete_entry(entry)
+            main_menu
             
+        when "e"
+            edit_entry(entry)
+            system "clear"
+            main_menu
+            
+        when "m"
+            system "clear"
+            main_menu
+            
+        else 
+            system "clear"
+            puts "#{selection} is not a valid input"
+            puts entry.to_s
+            search_submenu(entry)
+        end
+    end
 end
+    
